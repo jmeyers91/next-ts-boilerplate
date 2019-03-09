@@ -1,0 +1,41 @@
+{
+  "modules": {
+    "byIdentifier": {
+      "multi ../../node_modules/next/dist/client/next": 0,
+      "ignored ../../node_modules/htmlparser2/lib readable-stream": 1,
+      "ignored ../../node_modules/readable-stream/lib util": 2,
+      "ignored ../../node_modules/readable-stream/lib/internal/streams util": 3,
+      "ignored ../../node_modules/object-inspect ./util.inspect": 4
+    },
+    "usedIds": {
+      "0": 0,
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 4
+    }
+  },
+  "chunks": {
+    "byName": {
+      "commons": 0,
+      "static/runtime/webpack.js": 1,
+      "static/0q9xeaxN9M2qoOiS8zWpg/pages/__tests__/index.test.js": 2,
+      "static/0q9xeaxN9M2qoOiS8zWpg/pages/_app.js": 3,
+      "static/0q9xeaxN9M2qoOiS8zWpg/pages/_error.js": 4,
+      "static/0q9xeaxN9M2qoOiS8zWpg/pages/about.js": 5,
+      "static/0q9xeaxN9M2qoOiS8zWpg/pages/index.js": 6,
+      "static/runtime/main.js": 7
+    },
+    "bySource": {},
+    "usedIds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  }
+}
