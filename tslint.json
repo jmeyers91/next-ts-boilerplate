@@ -10,7 +10,8 @@
     "object-literal-sort-keys": false,
     "interface-name": [true, "never-prefix"],
     "interface-over-type-literal": false,
-    "member-access": false
+    "member-access": false,
+    "no-var-requires": false
   },
   "rulesDirectory": []
 }
