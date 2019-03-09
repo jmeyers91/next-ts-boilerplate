@@ -1,8 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import styled from '../styled';
-
-const imageSrc = require('../assets/images/cat.jpg');
+import imageSrc from '../assets/images/cat.jpg';
 
 export default function IndexPage() {
   return (
@@ -11,6 +10,7 @@ export default function IndexPage() {
       <Link href="/about">
         <a>About</a>
       </Link>
+      <div>Cat:</div>
       <img src={imageSrc} />
     </Root>
   );

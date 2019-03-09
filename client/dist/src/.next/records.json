@@ -19,12 +19,12 @@
     "byName": {
       "commons": 0,
       "static/runtime/webpack.js": 1,
-      "static/runtime/main.js": 2,
-      "static/yqvaaB1UsuegQQLDPiR5E/pages/__tests__/index.test.js": 3,
-      "static/yqvaaB1UsuegQQLDPiR5E/pages/_app.js": 4,
-      "static/yqvaaB1UsuegQQLDPiR5E/pages/_error.js": 5,
-      "static/yqvaaB1UsuegQQLDPiR5E/pages/about.js": 6,
-      "static/yqvaaB1UsuegQQLDPiR5E/pages/index.js": 7
+      "static/NSLwb_h_YvNq73THRqBk2/pages/__tests__/index.test.js": 2,
+      "static/NSLwb_h_YvNq73THRqBk2/pages/_app.js": 3,
+      "static/NSLwb_h_YvNq73THRqBk2/pages/_error.js": 4,
+      "static/NSLwb_h_YvNq73THRqBk2/pages/about.js": 5,
+      "static/NSLwb_h_YvNq73THRqBk2/pages/index.js": 6,
+      "static/runtime/main.js": 7
     },
     "bySource": {},
     "usedIds": [

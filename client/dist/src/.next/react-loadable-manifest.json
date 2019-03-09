@@ -1239,7 +1239,7 @@
       "publicPath": "static/chunks/commons.70a93e0308f2b0b72b78.js"
     }
   ],
-  "../modules/_core": [
+  "../../modules/_core": [
     {
       "id": "rFq9",
       "name": "../../node_modules/core-js/library/modules/_core.js",
