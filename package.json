@@ -4,11 +4,17 @@
   "description": "",
   "main": "scripts/start.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "node scripts/postinstall.js",
-    "format": "prettier --write \"{client/src,client/server}/**/*.{ts,tsx,json}\"",
-    "lint": "tslint -c tslint.json \"{client/src,client/server}/**/*.{ts,tsx}\"",
-    "start": "node scripts/start.js"
+    "test": "npm run test-client && npm run test-api",
+    "postinstall": "[[ $RUN_MODE = 'API' ]] && npm run install-api || npm run install-client",
+    "start": "[[ $RUN_MODE = 'API' ]] && npm run start-api || npm run start-client",
+    "install-client": "cd client && npm i",
+    "install-api": "cd api && npm i",
+    "start-client": "cd client && npm run start",
+    "start-api": "cd api && npm run start",
+    "test-client": "cd client && npm run test",
+    "test-api": "cd api && npm run test",
+    "format": "prettier --write \"{client/src,client/server,api/src,api/scripts}/**/*.{ts,tsx,json}\"",
+    "lint": "tslint -c tslint.json \"{client/src,client/server,api/src,api/scripts}/**/*.{ts,tsx}\""
   },
   "keywords": [],
   "author": "",
