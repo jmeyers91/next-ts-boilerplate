@@ -1,0 +1,5 @@
+node_modules
+dist
+_api
+*.sqlite3
+.rpt2_cache

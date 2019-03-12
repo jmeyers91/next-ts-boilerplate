@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "plugins": [
+      { "transform": "typescript-is/lib/transform-inline/transformer" }
+    ],
+    "target": "es2018",
+    "module": "ESNext",
+    "lib": ["es2018"],
+    "moduleResolution": "node",
+    "strict": true,
+    "allowJs": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "allowSyntheticDefaultImports": true,
+    "noImplicitReturns": true,
+    "resolveJsonModule": true,
+    "outDir": "dist",
+    "baseUrl": "."
+  }
+}
