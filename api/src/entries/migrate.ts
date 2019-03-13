@@ -2,10 +2,10 @@
  * Entry point for running database migrations.
  */
 import 'reflect-metadata';
-import { migrateLatest } from '../utils/knexMigrateUtils';
-import getMigrations from '../migrations/_index';
-import Db from '../Db';
-import log from '../utils/log';
+import { migrateLatest } from 'src/_core/utils/knexMigrateUtils';
+import getMigrations from 'src/migrations/_index';
+import Db from 'src/_core/Db';
+import log from 'src/utils/log';
 
 /**
  * Run API server database migrations exported from `src/migrations/_index`

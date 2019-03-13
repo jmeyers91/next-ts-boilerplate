@@ -1,4 +1,4 @@
-import Migration from '../Migration';
+import Migration from '../_core/Migration';
 
 export default async function loadMigrations(): Promise<Migration[]> {
   return Promise.all([

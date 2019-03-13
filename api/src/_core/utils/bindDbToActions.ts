@@ -1,4 +1,4 @@
-import * as actionIndex from '../actions/_index';
+import * as actionIndex from '../../actions/_index';
 import Db from '../Db';
 
 /**

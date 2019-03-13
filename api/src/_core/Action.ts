@@ -1,12 +1,13 @@
 import Db from './Db';
+import { validateActionResults } from '../config';
 
 /**
  * Actions are thin wrappers around functions with support for run-time input and result validation.
  * The generic types Props and Result correspond to the function's expected props and result types.
  */
-class Action<Props, Result> {
-  public readonly validatePropsFns: Array<Validate<Props>> = [];
-  public readonly validateResultFns: Array<Validate<Result>> = [];
+class Action<Props = void, Result = void> {
+  private readonly validatePropsFn: Validate<Props>;
+  private readonly validateResultFn?: Validate<Result>;
   private readonly fn: RunFn<Props, Result>;
 
   /**
@@ -14,33 +15,18 @@ class Action<Props, Result> {
    *
    * @param fn - The body of the action.
    */
-  constructor(fn: RunFn<Props, Result>) {
+  constructor(
+    fn: RunFn<Props, Result>,
+    validateProps: Validate<Props>,
+    validateResult?: Validate<Result>,
+  ) {
     this.fn = fn;
+    this.validatePropsFn = validateProps;
+    this.validateResultFn = validateResult;
   }
 
   /**
-   * Add a prop validation function and an optional result validation function to
-   * this action.
-   *
-   * @params validateProps - Optional prop validation function.
-   * @params validateResult - Optional result validation function.
-   * @returns this
-   */
-  public validate(
-    validateProps: Validate<Props> | null | undefined,
-    validateResult?: Validate<Result> | null,
-  ): this {
-    if (validateProps) {
-      this.validatePropsFns.push(validateProps);
-    }
-    if (validateResult) {
-      this.validateResultFns.push(validateResult);
-    }
-    return this;
-  }
-
-  /**
-   * Run this action's prop validation functions against an unknown value.
+   * Run this action's prop validation function against an unknown value.
    * Resolves the value casted to the actions prop type if successful.
    * Throws otherwise.
    *
@@ -48,15 +34,12 @@ class Action<Props, Result> {
    * @returns The passed props value wrapped in a promise. Throws if validation fails.
    */
   public async runPropValidation(props: unknown): Promise<Props> {
-    let validatedProps = props as Props;
-    for (const validateProps of this.validatePropsFns) {
-      validatedProps = await validateProps(validatedProps);
-    }
-    return validatedProps;
+    const { validatePropsFn } = this;
+    return validatePropsFn(props);
   }
 
   /**
-   * Run this action's result validation functions against an unknown value.
+   * Run this action's result validation function against an unknown value.
    * Resolves the value casted to the actions result type if successful.
    * Throws otherwise.
    *
@@ -64,11 +47,12 @@ class Action<Props, Result> {
    * @returns The passed result value wrapped in a promise. Throws if validation fails.
    */
   public async runResultValidation(result: unknown): Promise<Result> {
-    let validatedResult: Result = result as Result;
-    for (const validateResult of this.validateResultFns) {
-      validatedResult = await validateResult(validatedResult);
+    const { validateResultFn } = this;
+    if (validateActionResults && typeof validateResultFn === 'function') {
+      return validateResultFn(result);
+    } else {
+      return result as Result;
     }
-    return validatedResult;
   }
 
   /**

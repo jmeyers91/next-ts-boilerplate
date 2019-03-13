@@ -1,15 +1,13 @@
-import Knex from 'knex';
 import { Middleware } from 'koa';
 import Db from '../Db';
-import bindDbToActions from '../utils/bindDbToActions';
+import bindDbToActions from './bindDbToActions';
 
 /**
  * Attaches database to context under the key `db`.
  *
  * @param knex - The knex instance to use.
  */
-export default function dbMiddleware(knex: Knex): Middleware {
-  const db: Db = new Db(knex);
+export default function dbMiddleware(db: Db): Middleware {
   const actions = bindDbToActions(db);
 
   return function dbMiddlewareHandler(context, next) {

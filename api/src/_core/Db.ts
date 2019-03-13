@@ -1,22 +1,29 @@
 import Knex from 'knex';
-import getBoundModels, { ModelIndex } from './models/_index';
-import getKnex from './knex';
+import getBoundModels, { ModelIndex } from '../models/_index';
+import getDefaultKnex from './knex';
 
+/** Needed because knex always throws during a transaction rollback */
 const IGNORE_ERROR = Symbol('IGNORE_ERROR');
-let singletonDb: Db | undefined;
 
+/**
+ * The Db class should be the common interface used to access the database.
+ *
+ * @param knex The knex instance.
+ * @property models - An
+ */
 export default class Db {
   /**
    * Get the singleton database.
    *
-   * @returns Cached Db instance
+   * @returns Db instance
    */
-  static getDefault(): Db {
-    if (!singletonDb) {
-      singletonDb = new Db(getKnex());
+  public static getDefault(): Db {
+    if (!this.singleton) {
+      this.singleton = new Db(getDefaultKnex());
     }
-    return singletonDb;
+    return this.singleton;
   }
+  private static singleton: Db | undefined;
 
   public models: ModelIndex;
   public knex: Knex;
@@ -33,7 +40,9 @@ export default class Db {
    * @params transactionBody - The function that receives the transaction db.
    * @returns The return value of the transaction body.
    */
-  async startTransaction<R>(transactionBody: DbTransactionBody<R>): Promise<R> {
+  public async startTransaction<R>(
+    transactionBody: DbTransactionBody<R>,
+  ): Promise<R> {
     return await this.knex.transaction<R>(trx => {
       Promise.resolve()
         .then(() => transactionBody(new Db(trx)))
@@ -49,7 +58,7 @@ export default class Db {
    * @params transactionBody - The function that receives the transaction db.
    * @returns The return value of the transaction body.
    */
-  async startTestTransaction<R>(
+  public async startTestTransaction<R>(
     transactionBody: DbTransactionBody<R>,
   ): Promise<R> {
     const { knex } = this;
@@ -97,10 +106,19 @@ export default class Db {
    * });
    * ```
    */
-  test<R>(testBody: DbTransactionBody<R>): () => Promise<void> {
+  public test<R>(testBody: DbTransactionBody<R>): () => Promise<void> {
     return async () => {
       await this.startTestTransaction(testBody);
     };
+  }
+
+  /**
+   * Disconnect from the database.
+   *
+   * @returns A promise
+   */
+  public async destroy(): Promise<void> {
+    return await this.knex.destroy();
   }
 }
 

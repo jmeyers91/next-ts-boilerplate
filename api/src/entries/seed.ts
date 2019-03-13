@@ -2,9 +2,9 @@
  * Entry point for running database seeds.
  */
 import 'reflect-metadata';
-import Db from '../Db';
-import getSeeds from '../seeds/_index';
-import log from '../utils/log';
+import Db from 'src/_core/Db';
+import getSeeds from 'src/seeds/_index';
+import log from 'src/utils/log';
 
 /**
  * Run API server database seeds exported from `src/seeds/_index`

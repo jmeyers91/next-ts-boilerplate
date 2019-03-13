@@ -1,4 +1,4 @@
-import { upTable, downTable } from '../utils/knexMigrateUtils';
+import { upTable, downTable } from '../_core/Migration';
 export const name = '20190212182007_create_post_table';
 
 export const up = upTable('post', t => {

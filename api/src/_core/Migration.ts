@@ -7,4 +7,5 @@ interface Migration {
   down(knex: Knex): any;
 }
 
+export * from './utils/knexMigrateUtils';
 export default Migration;

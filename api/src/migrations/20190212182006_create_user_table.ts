@@ -1,4 +1,4 @@
-import { upTable, downTable } from '../utils/knexMigrateUtils';
+import { upTable, downTable } from '../_core/Migration';
 export const name = '20190212182006_create_user_table';
 
 export const up = upTable('user', t => {

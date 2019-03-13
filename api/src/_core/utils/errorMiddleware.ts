@@ -1,6 +1,5 @@
 import { Middleware } from 'koa';
 import chalk from 'chalk';
-import log from '../utils/log';
 
 const styleStatus =
   process.env.NODE_ENV === 'development' ? styleStatusDev : styleStatusProd;
@@ -15,15 +14,19 @@ export default function createErrorMiddleware(): Middleware {
     const { request, response } = context;
     try {
       await next();
-      log(styleStatus(response.status), request.method, request.path);
+      /* tslint:disable */
+      console.log(styleStatus(response.status), request.method, request.path);
+      /* tslint:enable */
     } catch (error) {
       const status = error.status || 400;
-      log(
+      /* tslint:disable */
+      console.log(
         styleStatus(status),
         request.method,
         request.path,
         error.stack || error.message,
       );
+      /* tslint:enable */
       context.response.status = status;
       context.response.body = {
         success: false,

@@ -1,4 +1,4 @@
-import Router from '../Router';
+import Router from '../_core/Router';
 
 export default new Router().post('/user', async context => {
   const result = await context.actions.createUser(context.request.body);
