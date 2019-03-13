@@ -2,7 +2,6 @@
  * Entry point for running database migrations.
  */
 import 'reflect-metadata';
-import Knex from 'knex';
 import { migrateLatest } from '../utils/knexMigrateUtils';
 import getMigrations from '../migrations/_index';
 import Db from '../Db';

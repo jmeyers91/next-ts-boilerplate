@@ -2,7 +2,10 @@ import jwt from 'jsonwebtoken';
 import getSecret from './getSecret';
 import { month } from './timeConstants';
 
-interface Payload {
+/**
+ * Auth token payload shape
+ */
+export interface AuthTokenPayload {
   id: number;
 }
 
@@ -14,7 +17,7 @@ interface Payload {
  * @returns a new JWT token
  */
 export default function createAuthToken(
-  payload: Payload,
+  payload: AuthTokenPayload,
   expiresIn: number = month,
 ): string {
   return jwt.sign(payload, getSecret(), {

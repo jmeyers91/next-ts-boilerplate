@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/start.js",
   "scripts": {
-    "test": "NODE_ENV=test jest",
+    "test": "rm -f test.sqlite3 && NODE_ENV=test jest",
     "start": "node dist/start.js --inspect",
     "migrate": "([[ $NODE_ENV = 'development' ]] && (npm run build && node dist/migrate.js) || node dist/migrate.js)",
     "seed": "([[ $NODE_ENV = 'development' ]] && (npm run build && node dist/seed.js) || node dist/seed.js)",

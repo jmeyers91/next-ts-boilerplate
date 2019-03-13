@@ -20,7 +20,6 @@ export default function getKnex(): Knex {
          *   development database is /api/development.sqlite3
          *   test database is /api/test.sqlite3
          */
-
         filename: path.resolve(
           __dirname,
           '..',

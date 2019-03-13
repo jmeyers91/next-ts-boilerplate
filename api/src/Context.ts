@@ -1,10 +1,11 @@
 import { Context as KoaContext } from 'koa';
 import Db from './Db';
-import { ActionRunIndex } from './middleware/dbMiddleware';
+import { ActionRunIndex } from './utils/bindDbToActions';
 
 export interface CustomContext {
   /** added in middleware/dbMiddleware.ts */
   db: Db;
+  /** added in middleware/dbMiddleware.ts */
   actions: ActionRunIndex;
 }
 
