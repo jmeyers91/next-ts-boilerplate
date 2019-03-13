@@ -1,5 +1,4 @@
-import Knex from 'knex';
-import { ModelIndex } from './models/_index';
+import Db from './Db';
 
-type Seed = (models: ModelIndex, knex: Knex) => any;
+type Seed = (db: Db) => any;
 export default Seed;

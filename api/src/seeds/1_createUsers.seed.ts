@@ -1,6 +1,6 @@
 import Seed from '../Seed';
 
-const createUsers: Seed = async (models, knex) => {
+const createUsers: Seed = async ({ models, knex }) => {
   // TODO: Implement createUsers seed
 };
 

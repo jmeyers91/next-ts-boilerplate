@@ -2,18 +2,17 @@
  * Entry point for running database seeds.
  */
 import 'reflect-metadata';
-import Knex from 'knex';
+import Db from '../Db';
 import getSeeds from '../seeds/_index';
-import getModels from '../models/_index';
 import log from '../utils/log';
 
 /**
  * Run API server database seeds exported from `src/seeds/_index`
  */
-export default async function runSeeds(knex: Knex) {
+export default async function runSeeds(db: Db) {
   const seeds = await getSeeds();
   for (const { default: seedFn } of seeds) {
-    await seedFn(getModels(knex), knex);
+    await seedFn(db);
   }
   return seeds.map(seed => seed.default.name);
 }
@@ -21,18 +20,18 @@ export default async function runSeeds(knex: Knex) {
 // If called directly (node dist/migrate.js), run seeds using the default knex instance.
 if (require.main === module) {
   (async () => {
-    const knex = (await import('../knex')).default;
     log('Running seeds');
+    const db = Db.getDefault();
     /* tslint:disable */
     console.time('done');
     /* tslint:enable */
-    const ranSeeds = await runSeeds(knex);
+    const ranSeeds = await runSeeds(db);
     if (ranSeeds.length) {
       log(ranSeeds.map(s => '  ' + s).join('\n'));
     }
     /* tslint:disable */
     console.timeEnd('done');
     /* tslint:enable */
-    await knex.destroy();
+    await db.knex.destroy();
   })();
 }

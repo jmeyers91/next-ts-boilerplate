@@ -1,6 +1,5 @@
 import Knex from 'knex';
 import { Model } from 'objection';
-import defaultKnex from '../knex';
 
 import Post from './Post.model';
 import User from './User.model';
@@ -21,7 +20,7 @@ export type ModelIndex = typeof models;
  * @params knex - The knex instance to bind the models to. Knex transactions can also be passed.
  * @returns A model class index object. Keys are model names, values are model classes
  */
-export default function getModels(knex: Knex = defaultKnex): typeof models {
+export default function getModels(knex: Knex): typeof models {
   const boundModels: Record<string, typeof Model> = {};
   for (const key in models) {
     if (models.hasOwnProperty(key)) {

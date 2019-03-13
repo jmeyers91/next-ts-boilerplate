@@ -1,12 +1,12 @@
 import Koa from 'koa';
 import KoaBodyparser from 'koa-bodyparser';
 import koaHelmet from 'koa-helmet';
-import errorMiddleware from './middleware/errorMiddleware';
+import errorMiddleware from 'src/middleware/errorMiddleware';
 import jwtMiddleware from 'koa-jwt';
-import dbMiddleware from './middleware/dbMiddleware';
-import knex from './knex';
-import log, { logError } from './utils/log';
-import apiRouter from './routes/_index';
+import dbMiddleware from 'src/middleware/dbMiddleware';
+import getKnex from 'src/knex';
+import log, { logError } from 'src/utils/log';
+import apiRouter from 'src/routes/_index';
 
 /**
  * Handles creating the Koa webserver, attaching middleware, and listening for changes.
@@ -27,7 +27,7 @@ export default class ServerApi {
       .use(koaHelmet()) // Add security headers
       .use(errorMiddleware()) // Log requests and handle errors
       .use(KoaBodyparser()) // Parse request body
-      .use(dbMiddleware(knex)) // Attach knex to context
+      .use(dbMiddleware(getKnex())) // Attach knex to context
       .use(
         jwtMiddleware({
           // Parse JWT auth tokens in `authToken` cookie or `Authorization` header.

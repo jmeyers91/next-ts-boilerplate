@@ -62,7 +62,7 @@ export function upTable(
   buildTable: BuildTable,
 ): MigrateFunction {
   return async function migrationUp(knex: Knex) {
-    if (await knex.schema.hasTable(tableName)) {
+    if (!(await knex.schema.hasTable(tableName))) {
       await knex.schema.createTable(tableName, buildTable);
     }
   };

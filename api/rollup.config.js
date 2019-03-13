@@ -1,5 +1,6 @@
 import path from 'path';
 import typescriptPlugin from 'rollup-plugin-typescript2';
+import includePaths from 'rollup-plugin-includepaths';
 
 // TTypescript is a thin wrapper around tsc that enables using custom transforms in tsconfig.
 // Needed for typescript-is library.
@@ -18,11 +19,16 @@ const entry = filename => ({
     dir: distPath,
     format: 'cjs',
   },
+  sourceMap: true,
   plugins: [
     typescriptPlugin({
       typescript: ttypescript,
       tsconfig,
     }),
+    // includePaths({
+    //   paths: srcPath,
+    //   extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
+    // }),
   ],
   onwarn(message) {
     /**

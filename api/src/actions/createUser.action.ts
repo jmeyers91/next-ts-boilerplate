@@ -16,6 +16,9 @@ interface Result {
   lastName: string;
 }
 
+/**
+ * Create a user
+ */
 export const createUser = new Action<Props, Result>(async (db, props) => {
   const { User } = db.models;
   const { email, password, firstName, lastName } = props;
