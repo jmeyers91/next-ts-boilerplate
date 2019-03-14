@@ -3,18 +3,17 @@
  */
 import 'reflect-metadata';
 import Db from 'src/_core/Db';
-import getSeeds from 'src/seeds/_index';
+import seeds from 'src/seeds/_index';
 import log from 'src/utils/log';
 
 /**
  * Run API server database seeds exported from `src/seeds/_index`
  */
 export default async function runSeeds(db: Db) {
-  const seeds = await getSeeds();
-  for (const { default: seedFn } of seeds) {
+  for (const seedFn of seeds) {
     await seedFn(db);
   }
-  return seeds.map(seed => seed.default.name);
+  return seeds.map(seed => seed.name);
 }
 
 // If called directly (node dist/migrate.js), run seeds using the default knex instance.

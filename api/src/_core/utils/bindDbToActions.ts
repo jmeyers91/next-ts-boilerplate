@@ -9,14 +9,14 @@ import Db from '../Db';
 export default function bindDbToActions(db: Db): ActionRunIndex {
   const actionRunIndex: Record<string, BoundRun<any>> = {};
   for (const [key, action] of Object.entries(actionIndex)) {
-    actionRunIndex[key] = (action.run as (
-      this: typeof action,
-      db: Db,
-      props: any,
-    ) => any).bind(action, db);
+    actionRunIndex[key] = (action.run as BoundFn<typeof action>).bind(
+      action,
+      db,
+    );
   }
   return actionRunIndex as ActionRunIndex;
 }
+type BoundFn<T> = (this: T, ...args: any[]) => any;
 
 /**
  * Just like `ActionIndex` except the object values are action run functions with the db argument pre-bound.

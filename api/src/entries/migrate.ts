@@ -3,7 +3,7 @@
  */
 import 'reflect-metadata';
 import { migrateLatest } from 'src/_core/utils/knexMigrateUtils';
-import getMigrations from 'src/migrations/_index';
+import migrations from 'src/migrations/_index';
 import Db from 'src/_core/Db';
 import log from 'src/utils/log';
 
@@ -11,7 +11,7 @@ import log from 'src/utils/log';
  * Run API server database migrations exported from `src/migrations/_index`
  */
 export default async function runMigrations(db: Db) {
-  return migrateLatest(db.knex, await getMigrations());
+  return migrateLatest(db.knex, migrations);
 }
 
 // If called directly (node dist/migrate.js), run migrations using the default knex instance.

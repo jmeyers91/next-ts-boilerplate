@@ -1,9 +1,8 @@
 import path from 'path';
 import typescriptPlugin from 'rollup-plugin-typescript2';
-import includePaths from 'rollup-plugin-includepaths';
 
 // TTypescript is a thin wrapper around tsc that enables using custom transforms in tsconfig.
-// Needed for typescript-is library.
+// Needed to pre-compile typescript-is validation functions using compile-time types.
 import ttypescript from 'ttypescript';
 
 const tsconfig = path.resolve(__dirname, 'tsconfig.json');
@@ -19,28 +18,31 @@ const entry = filename => ({
     dir: distPath,
     format: 'cjs',
   },
-  sourceMap: true,
   plugins: [
     typescriptPlugin({
       typescript: ttypescript,
       tsconfig,
     }),
-    // includePaths({
-    //   paths: srcPath,
-    //   extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
-    // }),
   ],
-  onwarn(message) {
-    /**
-     * Hide "external dependency" warning.
-     * We're currently not bundling dependencies because it's not necessary in
-     * Node apps, and will probably cause issues with dependencies that have a
-     * native compile step.
-     */
-    if (/external dependency/.test( message )){
+  /**
+   * Hide "external dependency", "circular dependency", and unused "typescript-is" import warnings.
+   * Reasons:
+   *  - No need to bundle server-side dependencies.
+   *  - Circular dependencies between models is expected and should be handled with lazy evaluation.
+   *  - Typescript-is function calls are pre-compiled away resulting in the unused import warning.
+   */
+  onwarn(event) {
+    if(!event || !event.message) {
       return;
     }
-    console.error(message);
+    if(
+      event.code === 'UNRESOLVED_IMPORT' ||
+      (event.code === 'UNUSED_EXTERNAL_IMPORT' && event.source === 'typescript-is') ||
+      (event.code === 'CIRCULAR_DEPENDENCY' && event.importer && event.importer.endsWith('.model.ts'))
+    ) {
+      return;
+    }
+    console.error(event.code, event.importer, event.message)
   },
 });
 
