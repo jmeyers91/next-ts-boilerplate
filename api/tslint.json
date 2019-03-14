@@ -1,17 +1,5 @@
 {
-  "defaultSeverity": "error",
   "extends": [
-    "tslint:recommended",
-    "tslint-config-prettier"
-  ],
-  "jsRules": {},
-  "rules": {
-    "ordered-imports": false,
-    "object-literal-sort-keys": false,
-    "interface-name": false,
-    "interface-over-type-literal": false,
-    "no-shadowed-variable": false,
-    "member-access": false
-  },
-  "rulesDirectory": []
+    "../tslint.json"
+  ]
 }
