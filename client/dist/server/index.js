@@ -7,10 +7,14 @@ const NextApp_1 = __importDefault(require("./NextApp"));
 const config_1 = require("./config");
 main();
 async function main() {
-    const app = await new NextApp_1.default({ dir: config_1.dir, conf: config_1.conf })
+    const app = await new NextApp_1.default({
+        dir: config_1.dir,
+        conf: config_1.conf,
+        dev: config_1.dev,
+    })
         .proxy('/api/', config_1.apiUrl)
         .proxy('/socket.io/', config_1.apiUrl)
-        .start();
+        .start(config_1.port);
     /* tslint:disable */
     console.log(`Listening on port ${app.port}`);
     /* tslint:enable */

@@ -14,9 +14,6 @@ const http_1 = __importDefault(require("http"));
 const url_1 = __importDefault(require("url"));
 const http_proxy_1 = __importDefault(require("http-proxy"));
 const next_1 = __importDefault(require("next"));
-const defaultPort = parseInt(process.env.PORT || '3000', 10);
-const defaultNextDev = process.env.NODE_ENV === 'development';
-const defaultNextConfig = {};
 const useTypescriptLoader = process.env.NODE_ENV !== 'production';
 // Handles creating the Next server app and serving it on an HTTP server and proxying API requests
 class NextApp {
@@ -47,14 +44,17 @@ class NextApp {
         });
         return this;
     }
-    async start(port = defaultPort) {
+    async start(port) {
         this.port = port;
-        let conf = Object.assign({}, defaultNextConfig, this.nextOptions.conf);
-        if (useTypescriptLoader) {
+        const { dev } = this.nextOptions;
+        let { conf } = this.nextOptions;
+        // Typescript is pre-compiled in production, so the typescript plugin is only loaded during development.
+        // This allows us to avoid installing typescript in production.
+        if (dev) {
             const withTypescript = (await Promise.resolve().then(() => __importStar(require('@zeit/next-typescript')))).default;
             conf = withTypescript(conf);
         }
-        this.nextServer = next_1.default(Object.assign({ dev: defaultNextDev }, this.nextOptions, { conf }));
+        this.nextServer = next_1.default(Object.assign({}, this.nextOptions, { conf }));
         this.handle = this.nextServer.getRequestHandler();
         await this.nextServer.prepare();
         await new Promise((resolve, reject) => {

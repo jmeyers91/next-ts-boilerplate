@@ -13,7 +13,7 @@
     "build-client-assets": "cp -R src/assets dist/src/assets",
     "build-client": "tsc && npm run build-client-assets",
     "build-server": "tsc -p server/tsconfig.json && cp server/.babelrc.prod.json dist/server/.babelrc",
-    "build-next": "NODE_ENV=production node dist/server/build.js",
+    "build-next": "node dist/server/build.js",
     "build": "npm run clean && npm run build-client && npm run build-server && npm run build-next",
     "start": "NODE_ENV=production node dist/server",
     "format": "prettier --write \"{src,server}/**/*.{ts,tsx,json}\"",

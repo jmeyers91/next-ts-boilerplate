@@ -67,3 +67,15 @@ Format code
 ```
 npm run format
 ```
+
+## Deploy
+
+To deploy the API server, you must set these environmental variables:
+
+- `RUN_MODE=API` - Tells the top-level post-install and start scripts to target the API server.
+- `API_SECRET` - The secret used to sign JSON web tokens for authentication. Keep it safe.
+
+To deploy the client server, you must set these environmental variables:
+
+- `RUN_MODE=CLIENT` - Tells the top-level post-install and start scripts to target the client server.
+- `API_URL` - The URL of the deployed API server to proxy requests to.

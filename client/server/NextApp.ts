@@ -3,11 +3,6 @@ import Url from 'url';
 import HttpProxy from 'http-proxy';
 import Next from 'next';
 
-const defaultPort = parseInt(process.env.PORT || '3000', 10);
-const defaultNextDev = process.env.NODE_ENV === 'development';
-const defaultNextConfig = {};
-const useTypescriptLoader = process.env.NODE_ENV !== 'production';
-
 type ProxyTest = (pathname: string) => boolean;
 type NextRequestHandler = ReturnType<Next.Server['getRequestHandler']>;
 
@@ -51,20 +46,19 @@ export default class NextApp {
     return this;
   }
 
-  public async start(port: number = defaultPort): Promise<this> {
+  public async start(port: number): Promise<this> {
     this.port = port;
-    let conf = {
-      ...defaultNextConfig,
-      ...this.nextOptions.conf,
-    };
+    const { dev } = this.nextOptions;
+    let { conf } = this.nextOptions;
 
-    if (useTypescriptLoader) {
+    // Typescript is pre-compiled in production, so the typescript plugin is only loaded during development.
+    // This allows us to avoid installing typescript in production.
+    if (dev) {
       const withTypescript = (await import('@zeit/next-typescript')).default;
       conf = withTypescript(conf);
     }
 
     this.nextServer = Next({
-      dev: defaultNextDev,
       ...this.nextOptions,
       conf,
     });
