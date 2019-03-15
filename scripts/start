@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [[ $RUN_MODE = 'API' ]]
+then
+  npm run start-api
+else
+  npm run start-client
+fi
