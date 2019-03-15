@@ -6,7 +6,7 @@
   "scripts": {
     "test": "npm run test-client && npm run test-api",
     "postinstall": "scripts/postinstall",
-    "start": "scripts/start",
+    "start": "node scripts/start",
     "format": "npm run format-client && npm run format-api",
     "lint": "npm run lint-client && npm run lint-api",
     "migrate": "cd api && npm run migrate",
