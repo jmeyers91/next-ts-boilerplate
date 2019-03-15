@@ -3,6 +3,7 @@
 if [[ $RUN_MODE = 'API' ]]
 then
   npm run install-api
+  npm run migrate
 else
   npm run install-client
 fi
